@@ -75,26 +75,48 @@
         <div class="podium">
             <div class="stand first-place">
                 <div class="place-number">1st</div>
-                <div class="player-name">Player 1</div>
-                <div class="score">X palabras adivinadas</div>
+                <div class="player-name" id="first-place-name">Player 1</div>
+                <div class="score" id="first-place-score">X palabras adivinadas</div>
             </div>
             <div class="stand second-place">
                 <div class="place-number">2nd</div>
-                <div class="player-name">Player 2</div>
-                <div class="score">X palabras adivinadas</div>
+                <div class="player-name" id="second-place-name">Player 2</div>
+                <div class="score" id="second-place-score">X palabras adivinadas</div>
             </div>
             <div class="stand third-place">
                 <div class="place-number">3rd</div>
-                <div class="player-name">Player 3</div>
-                <div class="score">X palabras adivinadas</div>
+                <div class="player-name" id="third-place-name">Player 3</div>
+                <div class="score" id="third-place-score">X palabras adivinadas</div>
             </div>
         </div>
         <div>
-            <button>
+            <button id="podium">
                 Actualizar Podium
             </button>
         </div>
     </main>
+    <script>
+        // https://score-word-of-the-dat.onrender.com/scores
+        const button = document.querySelector('#podium');
+    
+        button.addEventListener('click', async function(){
+            const response = await fetch("https://score-word-of-the-dat.onrender.com/scores");
+            console.log("response object", response);
+
+            const data = await response.json();
+            console.log("objeto data", data);
+
+            document.querySelector('#first-place-name').textContent = data[0].nombre;
+            document.querySelector('#second-place-name').textContent = data[1].nombre;
+            document.querySelector('#third-place-name').textContent = data[2].nombre;
+
+            document.querySelector('#first-place-score').textContent = data[0].puntos + " palabras adivinadas";
+            document.querySelector('#second-place-score').textContent = data[1].puntos + " palabras adivinadas";
+            document.querySelector('#third-place-score').textContent = data[2].puntos + " palabras adivinadas";
+
+        })
+    
+    </script>
 </body>
 
 </html>
